@@ -36,8 +36,12 @@ package io.github.guisso.taskmanagement.repository;
 import io.github.guisso.taskmanagement.entity.Entity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class Dao
@@ -53,7 +57,7 @@ public abstract class Dao<T>
 
     @Override
     public Long saveOrUpdate(T e) {
-        
+
         // Primary key
         Long id = 0L;
 
@@ -71,7 +75,7 @@ public abstract class Dao<T>
                 composeSaveOrUpdateStatement(preparedStatement, e);
 
                 // Show the full sentence
-                System.out.println("SQL: " + preparedStatement);
+                System.out.println(">> SQL: " + preparedStatement);
 
                 // Performs insertion into the database
                 preparedStatement.executeUpdate();
@@ -96,16 +100,16 @@ public abstract class Dao<T>
                     = DbConnection.getConexao().prepareStatement(
                             getUpdateStatment())) {
 
-                // Monta a declaração SQL com os dados (->?)
+                // Assemble the SQL statement with the data (->?)
                 composeSaveOrUpdateStatement(preparedStatement, e);
 
-                // Exibe a sentença completa
-                System.out.println(">> " + preparedStatement);
+                // Show the full sentence
+                System.out.println(">> SQL: " + preparedStatement);
 
-                // Executa a atualização no banco de dados
+                // Performs the update on the database
                 preparedStatement.executeUpdate();
 
-                // Mantém a chave primária
+                // Keep the primary key
                 id = ((Entity) e).getId();
 
             } catch (Exception ex) {
@@ -124,6 +128,21 @@ public abstract class Dao<T>
     @Override
     public List<T> findAll() {
         return null;
+    }
+
+    @Override
+    public List<T> extractObjects(ResultSet resultSet) {
+        List<T> objects = new ArrayList<>();
+
+        try {
+            while (resultSet.next()) {
+                objects.add(extractObject(resultSet));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return objects.isEmpty() ? null : objects;
     }
 
 }
