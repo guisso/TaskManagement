@@ -117,6 +117,7 @@ public class Task
     @Override
     public String toString() {
         return "Task{"
+                + "id=" + getId()
                 + "description=" + description
                 + ", progress=" + progress
                 + ", conclusion=" + conclusion
