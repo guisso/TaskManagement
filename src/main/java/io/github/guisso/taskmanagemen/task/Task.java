@@ -118,7 +118,7 @@ public class Task
     public String toString() {
         return "Task{"
                 + "id=" + getId()
-                + "description=" + description
+                + ", description=" + description
                 + ", progress=" + progress
                 + ", conclusion=" + conclusion
                 + ", concluded=" + concluded
