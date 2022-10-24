@@ -33,7 +33,7 @@
  */
 package io.github.guisso.taskmanagemen.task;
 
-import io.github.guisso.taskmanagement.entity.Entidade;
+import io.github.guisso.taskmanagement.entity.Entity;
 import java.time.LocalDate;
 
 /**
@@ -43,7 +43,7 @@ import java.time.LocalDate;
  * @version 0.1, 2022-10-24
  */
 public class Task
-        extends Entidade {
+        extends Entity {
 
     private String description;
     private Byte progress;

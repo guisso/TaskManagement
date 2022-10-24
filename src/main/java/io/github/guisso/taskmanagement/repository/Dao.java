@@ -33,7 +33,7 @@
  */
 package io.github.guisso.taskmanagement.repository;
 
-import io.github.guisso.taskmanagement.entity.Entidade;
+import io.github.guisso.taskmanagement.entity.Entity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -57,8 +57,8 @@ public abstract class Dao<T>
         // Primary key
         Long id = 0L;
 
-        if (((Entidade) e).getId() == null
-                || ((Entidade) e).getId() == 0) {
+        if (((Entity) e).getId() == null
+                || ((Entity) e).getId() == 0) {
 
             // Insert a new register
             // try-with-resources
@@ -94,7 +94,7 @@ public abstract class Dao<T>
             // Update existing record
             try ( PreparedStatement preparedStatement
                     = DbConnection.getConexao().prepareStatement(
-                            getSaveStatment())) {
+                            getUpdateStatment())) {
 
                 // Monta a declaração SQL com os dados (->?)
                 composeSaveStatement(preparedStatement, e);
@@ -106,7 +106,7 @@ public abstract class Dao<T>
                 preparedStatement.executeUpdate();
 
                 // Mantém a chave primária
-                id = ((Entidade) e).getId();
+                id = ((Entity) e).getId();
 
             } catch (Exception ex) {
                 System.out.println("Exception: " + ex);
