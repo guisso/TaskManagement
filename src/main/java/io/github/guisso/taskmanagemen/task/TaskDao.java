@@ -98,12 +98,12 @@ public class TaskDao extends Dao<Task> {
 
     @Override
     public String getFindByIdStatment() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return "select id, descricao, progresso, conclusao from tarefa where id = ?";
     }
 
     @Override
     public String getFindAllStatment() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return "select id, descricao, progresso, conclusao from tarefa";
     }
 
     @Override
