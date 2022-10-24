@@ -35,7 +35,9 @@ package io.github.guisso.taskmanagemen.task;
 
 import io.github.guisso.taskmanagement.repository.Dao;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,7 +59,7 @@ import java.util.logging.Logger;
  * @version 0.1, 2022-10-24
  */
 public class TaskDao extends Dao<Task> {
-    
+
     public static final String TABLE = "tarefa";
 
     @Override
@@ -83,9 +85,9 @@ public class TaskDao extends Dao<Task> {
 
             // LocalDate
             pstmt.setObject(3, e.getConclusion(), java.sql.Types.DATE);
-            
+
             // Just for the update
-            if(e.getId() != null) {
+            if (e.getId() != null) {
                 pstmt.setLong(4, e.getId());
             }
 
@@ -102,6 +104,27 @@ public class TaskDao extends Dao<Task> {
     @Override
     public String getFindAllStatment() {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Task extractObject(ResultSet resultSet) {
+
+        Task task = null;
+
+        try {
+            if (resultSet.next()) {
+                task = new Task();
+                task.setId(resultSet.getLong("id"));
+                task.setDescription(resultSet.getString("descricao"));
+                task.setProgress(resultSet.getByte("progresso"));
+                task.setConclusion(
+                        resultSet.getObject("conclusao", LocalDate.class));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return task;
     }
 
 }
