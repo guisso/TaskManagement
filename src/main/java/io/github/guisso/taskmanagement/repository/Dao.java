@@ -1,0 +1,129 @@
+/*
+ * CC BY-NC-SA 4.0
+ *
+ * Copyright 2022 Luis Guisso &lt;luis dot guisso at ifnmg dot edu dot br&gt;.
+ *
+ * Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+ *
+ * You are free to:
+ *   Share - copy and redistribute the material in any medium or format
+ *   Adapt - remix, transform, and build upon the material
+ *
+ * Under the following terms:
+ *   Attribution - You must give appropriate credit, provide 
+ *   a link to the license, and indicate if changes were made.
+ *   You may do so in any reasonable manner, but not in any 
+ *   way that suggests the licensor endorses you or your use.
+ *   NonCommercial - You may not use the material for commercial purposes.
+ *   ShareAlike - If you remix, transform, or build upon the 
+ *   material, you must distribute your contributions under 
+ *   the same license as the original.
+ *   No additional restrictions - You may not apply legal 
+ *   terms or technological measures that legally restrict 
+ *   others from doing anything the license permits.
+ *
+ * Notices:
+ *   You do not have to comply with the license for elements 
+ *   of the material in the public domain or where your use 
+ *   is permitted by an applicable exception or limitation.
+ *   No warranties are given. The license may not give you 
+ *   all of the permissions necessary for your intended use. 
+ *   For example, other rights such as publicity, privacy, 
+ *   or moral rights may limit how you use the material.
+ */
+package io.github.guisso.taskmanagement.repository;
+
+import io.github.guisso.taskmanagement.entity.Entidade;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.List;
+
+/**
+ * Class Dao
+ *
+ * @author Luis Guisso &lt;luis dot guisso at ifnmg dot edu dot br&gt;
+ * @version 0.1, 2022-10-24
+ * @param <T> Entity data type
+ */
+public abstract class Dao<T>
+        implements IDao<T> {
+
+    public static final String DB = "sistema";
+
+    @Override
+    public Long save(T e) {
+        
+        // Primary key
+        Long id = 0L;
+
+        if (((Entidade) e).getId() == null
+                || ((Entidade) e).getId() == 0) {
+
+            // Insert a new register
+            // try-with-resources
+            try ( PreparedStatement preparedStatement
+                    = DbConnection.getConexao().prepareStatement(
+                            getSaveStatment(),
+                            Statement.RETURN_GENERATED_KEYS)) {
+
+                // Assemble the SQL statement with the data (->?)
+                composeSaveStatement(preparedStatement, e);
+
+                // Show the full sentence
+                System.out.println("SQL: " + preparedStatement);
+
+                // Performs insertion into the database
+                preparedStatement.executeUpdate();
+
+                // Retrieve the generated primary key
+                ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
+                // Moves to first retrieved data
+                if (resultSet.next()) {
+
+                    // Retrieve the returned primary key
+                    id = resultSet.getLong(1);
+                }
+
+            } catch (Exception ex) {
+                System.out.println(">> " + ex);
+            }
+
+        } else {
+            // Update existing record
+            try ( PreparedStatement preparedStatement
+                    = DbConnection.getConexao().prepareStatement(
+                            getSaveStatment())) {
+
+                // Monta a declaração SQL com os dados (->?)
+                composeSaveStatement(preparedStatement, e);
+
+                // Exibe a sentença completa
+                System.out.println(">> " + preparedStatement);
+
+                // Executa a atualização no banco de dados
+                preparedStatement.executeUpdate();
+
+                // Mantém a chave primária
+                id = ((Entidade) e).getId();
+
+            } catch (Exception ex) {
+                System.out.println("Exception: " + ex);
+            }
+        }
+
+        return id;
+    }
+
+    @Override
+    public T findById(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<T> findAll() {
+        return null;
+    }
+
+}
