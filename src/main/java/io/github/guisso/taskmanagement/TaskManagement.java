@@ -27,9 +27,9 @@ public class TaskManagement {
         System.out.println("> " + revisarConteudo);
 
         // Salvar no banco de dados
-        new TaskDao().save(limparCasa);
-        new TaskDao().save(regarPlantas);
-        new TaskDao().save(revisarConteudo);
+        new TaskDao().saveOrUpdate(limparCasa);
+        new TaskDao().saveOrUpdate(regarPlantas);
+        new TaskDao().saveOrUpdate(revisarConteudo);
         
         // Recuperar objeto recém-salvo
         

@@ -50,10 +50,10 @@ public interface IDao<T> {
     
     public String getUpdateStatment();
 
-    public void composeSaveStatement(PreparedStatement pstmt, T e);
+    public void composeSaveOrUpdateStatement(PreparedStatement pstmt, T e);
 
-    public Long save(T e);
-
+    public Long saveOrUpdate(T e);
+    
     // Get by ID
     public String getFindByIdStatment();
 

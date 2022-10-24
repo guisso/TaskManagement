@@ -52,7 +52,7 @@ public abstract class Dao<T>
     public static final String DB = "sistema";
 
     @Override
-    public Long save(T e) {
+    public Long saveOrUpdate(T e) {
         
         // Primary key
         Long id = 0L;
@@ -68,7 +68,7 @@ public abstract class Dao<T>
                             Statement.RETURN_GENERATED_KEYS)) {
 
                 // Assemble the SQL statement with the data (->?)
-                composeSaveStatement(preparedStatement, e);
+                composeSaveOrUpdateStatement(preparedStatement, e);
 
                 // Show the full sentence
                 System.out.println("SQL: " + preparedStatement);
@@ -97,7 +97,7 @@ public abstract class Dao<T>
                             getUpdateStatment())) {
 
                 // Monta a declaração SQL com os dados (->?)
-                composeSaveStatement(preparedStatement, e);
+                composeSaveOrUpdateStatement(preparedStatement, e);
 
                 // Exibe a sentença completa
                 System.out.println(">> " + preparedStatement);

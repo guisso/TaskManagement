@@ -71,7 +71,7 @@ public class TaskDao extends Dao<Task> {
     }
 
     @Override
-    public void composeSaveStatement(PreparedStatement pstmt, Task e) {
+    public void composeSaveOrUpdateStatement(PreparedStatement pstmt, Task e) {
         try {
             pstmt.setString(1, e.getDescription());
             // OR
