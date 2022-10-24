@@ -34,6 +34,7 @@
 package io.github.guisso.taskmanagement.repository;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 
 /**
@@ -47,13 +48,13 @@ public interface IDao<T> {
 
     // Save
     public String getSaveStatment();
-    
+
     public String getUpdateStatment();
 
     public void composeSaveOrUpdateStatement(PreparedStatement pstmt, T e);
 
     public Long saveOrUpdate(T e);
-    
+
     // Get by ID
     public String getFindByIdStatment();
 
@@ -63,5 +64,10 @@ public interface IDao<T> {
     public String getFindAllStatment();
 
     public List<T> findAll();
+    
+    // Assembly objects
+    public T extractObject(ResultSet resultSet);
+
+    public List<T> extractObjects(ResultSet resultSet);
 
 }
