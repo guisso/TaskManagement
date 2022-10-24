@@ -6,8 +6,8 @@ package io.github.guisso.taskmanagement;
 
 import io.github.guisso.taskmanagemen.task.Task;
 import io.github.guisso.taskmanagemen.task.TaskDao;
-import io.github.guisso.taskmanagement.repository.Dao;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -27,13 +27,21 @@ public class TaskManagement {
         System.out.println("> " + revisarConteudo);
 
         // Salvar no banco de dados
-        new TaskDao().saveOrUpdate(limparCasa);
-        new TaskDao().saveOrUpdate(regarPlantas);
-        new TaskDao().saveOrUpdate(revisarConteudo);
+        Long limparCasaId = new TaskDao().saveOrUpdate(limparCasa);
+        limparCasa.setId(limparCasaId);
+        
+        Long regarPlantasId = new TaskDao().saveOrUpdate(regarPlantas);
+        regarPlantas.setId(regarPlantasId);
+        
+        Long revisarConteudoId = new TaskDao().saveOrUpdate(revisarConteudo);
+        revisarConteudo.setId(revisarConteudoId);
         
         // Recuperar objeto recém-salvo
+        Task limparCasaAux = new TaskDao().findById(revisarConteudoId);
+        System.out.println("> " + limparCasaAux);
         
         // Recuperar todos os objetos
-        
+        List<Task> tasks = new TaskDao().findAll();
+        System.out.println(">> " + tasks);
     }
 }
