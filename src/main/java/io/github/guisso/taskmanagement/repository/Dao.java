@@ -122,6 +122,31 @@ public abstract class Dao<T>
 
     @Override
     public T findById(Long id) {
+        
+        try ( PreparedStatement preparedStatement
+                = DbConnection.getConexao().prepareStatement(
+                        getFindByIdStatment())) {
+
+            // Assemble the SQL statement with the id
+            preparedStatement.setLong(1, id);
+
+            // Show the full sentence
+            System.out.println(">> SQL: " + preparedStatement);
+
+            // Performs the query on the database
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // If there is a retrieved record, advance to it...
+            if (resultSet.next()) {
+
+                // ... and returns the respective object
+                return extractObject(resultSet);
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex);
+        }
+
         return null;
     }
 
