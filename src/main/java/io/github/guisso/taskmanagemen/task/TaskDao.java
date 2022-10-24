@@ -112,14 +112,12 @@ public class TaskDao extends Dao<Task> {
         Task task = null;
 
         try {
-            if (resultSet.next()) {
-                task = new Task();
-                task.setId(resultSet.getLong("id"));
-                task.setDescription(resultSet.getString("descricao"));
-                task.setProgress(resultSet.getByte("progresso"));
-                task.setConclusion(
-                        resultSet.getObject("conclusao", LocalDate.class));
-            }
+            task = new Task();
+            task.setId(resultSet.getLong("id"));
+            task.setDescription(resultSet.getString("descricao"));
+            task.setProgress(resultSet.getByte("progresso"));
+            task.setConclusion(
+                    resultSet.getObject("conclusao", LocalDate.class));
         } catch (SQLException ex) {
             Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
         }

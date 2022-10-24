@@ -136,8 +136,10 @@ public abstract class Dao<T>
             // Performs the query on the database
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            // Returns the respective object
-            return extractObject(resultSet);
+            // Returns the respective object if exists
+            if (resultSet.next()) {
+                return extractObject(resultSet);
+            }
 
         } catch (Exception ex) {
             System.out.println("Exception: " + ex);
