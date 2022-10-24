@@ -57,15 +57,17 @@ import java.util.logging.Logger;
  * @version 0.1, 2022-10-24
  */
 public class TaskDao extends Dao<Task> {
+    
+    public static final String TABLE = "tarefa";
 
     @Override
     public String getSaveStatment() {
-        return "insert into tarefa values (default, ?, ?, ?)";
+        return "insert into " + TABLE + " values (default, ?, ?, ?)";
     }
 
     @Override
     public String getUpdateStatment() {
-        return "update tarefa set descricao = ?, progresso = ?, conclusao = ? where id = ?";
+        return "update " + TABLE + " set descricao = ?, progresso = ?, conclusao = ? where id = ?";
     }
 
     @Override
@@ -82,7 +84,7 @@ public class TaskDao extends Dao<Task> {
             // LocalDate
             pstmt.setObject(3, e.getConclusion(), java.sql.Types.DATE);
             
-            // Update only
+            // Just for the update
             if(e.getId() != null) {
                 pstmt.setLong(4, e.getId());
             }
