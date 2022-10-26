@@ -49,7 +49,7 @@ public class TaskManagement {
         Task limparCasa = new Task(null, "Limpar a casa", (byte) 20, null);
         System.out.println("> " + limparCasa);
 
-        Task regarPlantas = new Task(null, "Regar plantas", null, null);
+        Task regarPlantas = new Task(null, "Regar plantas", (byte) 15, null);
         System.out.println("> " + regarPlantas);
 
         Task revisarConteudo = new Task(null, "Revisar conteudo", (byte) 100, LocalDate.of(2022, 10, 15));
@@ -76,5 +76,15 @@ public class TaskManagement {
         // Recuperar todos os objetos
         List<Task> tasks = new TaskDao().findAll();
         System.out.println(">> " + tasks);
+        
+        // Recuperar todos os objetos com progresso menor do que 20
+        List<Task> tasksProgressLessThan20 
+                = new TaskDao().findByProgressLessThan20();
+        System.out.println(">> " + tasksProgressLessThan20);
+        
+        // Recuperar todos os objetos com descrição parecida com "sa"
+        List<Task> tasksWithSaDescription
+                = new TaskDao().findByDescription("sa");
+        System.out.println(">> " + tasksWithSaDescription);
     }
 }
