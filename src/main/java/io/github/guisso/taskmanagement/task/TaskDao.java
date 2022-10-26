@@ -61,19 +61,19 @@ import java.util.logging.Logger;
  * @version 0.1, 2022-10-24
  */
 public class TaskDao extends Dao<Task> {
-    
+
     public static final String TABLE = "tarefa";
-    
+
     @Override
     public String getSaveStatment() {
         return "insert into " + TABLE + "(descricao, progresso, conclusao)  values (?, ?, ?)";
     }
-    
+
     @Override
     public String getUpdateStatment() {
         return "update " + TABLE + " set descricao = ?, progresso = ?, conclusao = ? where id = ?";
     }
-    
+
     @Override
     public void composeSaveOrUpdateStatement(PreparedStatement pstmt, Task e) {
         try {
@@ -92,27 +92,27 @@ public class TaskDao extends Dao<Task> {
             if (e.getId() != null) {
                 pstmt.setLong(4, e.getId());
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @Override
     public String getFindByIdStatment() {
         return "select id, descricao, progresso, conclusao from tarefa where id = ?";
     }
-    
+
     @Override
     public String getFindAllStatment() {
         return "select id, descricao, progresso, conclusao from tarefa";
     }
-    
+
     @Override
     public Task extractObject(ResultSet resultSet) {
-        
+
         Task task = null;
-        
+
         try {
             task = new Task();
             task.setId(resultSet.getLong("id"));
@@ -123,14 +123,18 @@ public class TaskDao extends Dao<Task> {
         } catch (SQLException ex) {
             Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return task;
     }
-    
+
     public List<Task> findByProgressLessThan20() {
+        
+        final String SQL = "select *"
+                + " from " + TABLE 
+                + " where progresso < 20";
+        
         try ( PreparedStatement preparedStatement
-                = DbConnection.getConnection().prepareStatement(
-                        "select * from " + TABLE + " where progresso < 20")) {
+                = DbConnection.getConnection().prepareStatement(SQL)) {
 
             // Show the full sentence
             System.out.println(">> SQL: " + preparedStatement);
@@ -140,20 +144,24 @@ public class TaskDao extends Dao<Task> {
 
             // Returns the respective object
             return extractObjects(resultSet);
-            
+
         } catch (Exception ex) {
             System.out.println("Exception: " + ex);
         }
-        
+
         return null;
     }
-    
+
     public List<Task> findByDescription(String description) {
+        
+        final String SQL = "select *"
+                + " from " + TABLE 
+                + " where descricao"
+                + " like ?";
+        
         try ( PreparedStatement preparedStatement
-                = DbConnection.getConnection().prepareStatement(
-                        "select * from " + TABLE
-                        + " where descricao LIKE ?")) {
-            
+                = DbConnection.getConnection().prepareStatement(SQL)) {
+
             preparedStatement.setString(1, "%" + description + "%");
 
             // Show the full sentence
@@ -164,12 +172,12 @@ public class TaskDao extends Dao<Task> {
 
             // Returns the respective object
             return extractObjects(resultSet);
-            
+
         } catch (Exception ex) {
             System.out.println("Exception: " + ex);
         }
-        
+
         return null;
     }
-    
+
 }
