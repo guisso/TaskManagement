@@ -66,8 +66,12 @@ public class TaskManagement {
         revisarConteudo.setId(revisarConteudoId);
 
         // Recuperar objeto recém-salvo
-        Task limparCasaAux = new TaskDao().findById(revisarConteudoId);
+        Task limparCasaAux = new TaskDao().findById(limparCasaId);
         System.out.println("> " + limparCasaAux);
+        
+        // Atualizar registro já salvo
+        limparCasaAux.setDescription(limparCasaAux.getDescription() + "!!!");
+        new TaskDao().saveOrUpdate(limparCasaAux);
 
         // Recuperar todos os objetos
         List<Task> tasks = new TaskDao().findAll();
