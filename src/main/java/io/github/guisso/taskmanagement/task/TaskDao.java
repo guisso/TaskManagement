@@ -34,10 +34,12 @@
 package io.github.guisso.taskmanagement.task;
 
 import io.github.guisso.taskmanagement.repository.Dao;
+import io.github.guisso.taskmanagement.repository.DbConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,7 +54,7 @@ import java.util.logging.Logger;
  * `conclusao` date DEFAULT NULL,
  * PRIMARY KEY (`id`),
  * UNIQUE KEY `id` (`id`)
- * ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1
+ * ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
  * </code>
  *
  * @author Luis Guisso &lt;luis dot guisso at ifnmg dot edu dot br&gt;
@@ -125,4 +127,24 @@ public class TaskDao extends Dao<Task> {
         return task;
     }
 
+    public List<Task> findByProgressLessThan20() {
+        try ( PreparedStatement preparedStatement
+                = DbConnection.getConnection().prepareStatement(
+                        "select * from " + TABLE + " where progresso < 20")) {
+
+            // Show the full sentence
+            System.out.println(">> SQL: " + preparedStatement);
+
+            // Performs the query on the database
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Returns the respective object
+            return extractObjects(resultSet);
+
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex);
+        }
+
+        return null;
+    }
 }
