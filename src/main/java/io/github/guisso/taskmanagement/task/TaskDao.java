@@ -64,7 +64,7 @@ public class TaskDao extends Dao<Task> {
 
     @Override
     public String getSaveStatment() {
-        return "insert into " + TABLE + " values (default, ?, ?, ?)";
+        return "insert into " + TABLE + "(descricao, progresso, conclusao)  values (?, ?, ?)";
     }
 
     @Override
