@@ -33,8 +33,8 @@
  */
 package io.github.guisso.taskmanagement;
 
-import io.github.guisso.taskmanagemen.task.Task;
-import io.github.guisso.taskmanagemen.task.TaskDao;
+import io.github.guisso.taskmanagement.task.Task;
+import io.github.guisso.taskmanagement.task.TaskDao;
 import java.time.LocalDate;
 import java.util.List;
 

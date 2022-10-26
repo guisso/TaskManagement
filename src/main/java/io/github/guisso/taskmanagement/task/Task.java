@@ -31,7 +31,7 @@
  *   For example, other rights such as publicity, privacy, 
  *   or moral rights may limit how you use the material.
  */
-package io.github.guisso.taskmanagemen.task;
+package io.github.guisso.taskmanagement.task;
 
 import io.github.guisso.taskmanagement.entity.Entity;
 import java.time.LocalDate;
