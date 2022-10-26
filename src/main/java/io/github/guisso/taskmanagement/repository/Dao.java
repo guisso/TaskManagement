@@ -67,7 +67,7 @@ public abstract class Dao<T>
             // Insert a new register
             // try-with-resources
             try ( PreparedStatement preparedStatement
-                    = DbConnection.getConexao().prepareStatement(
+                    = DbConnection.getConnection().prepareStatement(
                             getSaveStatment(),
                             Statement.RETURN_GENERATED_KEYS)) {
 
@@ -97,7 +97,7 @@ public abstract class Dao<T>
         } else {
             // Update existing record
             try ( PreparedStatement preparedStatement
-                    = DbConnection.getConexao().prepareStatement(
+                    = DbConnection.getConnection().prepareStatement(
                             getUpdateStatment())) {
 
                 // Assemble the SQL statement with the data (->?)
@@ -124,7 +124,7 @@ public abstract class Dao<T>
     public T findById(Long id) {
 
         try ( PreparedStatement preparedStatement
-                = DbConnection.getConexao().prepareStatement(
+                = DbConnection.getConnection().prepareStatement(
                         getFindByIdStatment())) {
 
             // Assemble the SQL statement with the id
@@ -152,7 +152,7 @@ public abstract class Dao<T>
     public List<T> findAll() {
 
         try ( PreparedStatement preparedStatement
-                = DbConnection.getConexao().prepareStatement(
+                = DbConnection.getConnection().prepareStatement(
                         getFindAllStatment())) {
 
             // Show the full sentence
