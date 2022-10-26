@@ -77,7 +77,7 @@ public class DbConnection {
     //<editor-fold defaultstate="collapsed" desc="Construtor privado">
     /*
      * Private constructor to force access to the connection by the 
-     * static member getConexao() without requiring the generation of 
+     * static member getConnection() without requiring the generation of 
      * new objects ConexaoBd ConexaoBd
      */
     private DbConnection() {
@@ -89,7 +89,7 @@ public class DbConnection {
      *
      * @return Dabatase connection
      */
-    public static Connection getConexao() {
+    public static Connection getConnection() {
 
         // If there is no connection established...
         if (connection == null) {
