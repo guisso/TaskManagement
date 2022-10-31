@@ -100,12 +100,32 @@ public class TaskDao extends Dao<Task> {
 
     @Override
     public String getFindByIdStatment() {
-        return "select id, descricao, progresso, conclusao from tarefa where id = ?";
+        return "select id, descricao, progresso, conclusao, excluido"
+                + " from tarefa where id = ?";
     }
 
     @Override
     public String getFindAllStatment() {
-        return "select id, descricao, progresso, conclusao from tarefa";
+        return "select id, descricao, progresso, conclusao, excluido"
+                + " from tarefa"
+                + " where exlcuido = false";
+    }
+
+    @Override
+    public String getMoveToTrashStatement() {
+        return "update " + TABLE + " set excluido = true"
+                + " where id = ?";
+    }
+
+    @Override
+    public String getRestoreFromTrashStatement() {
+        return "update " + TABLE + " set excluido = false"
+                + " where id = ?";
+    }
+
+    @Override
+    public String getFindAllOnTrashStatement() {
+        return "select * from " + TABLE + " where excluido = true";
     }
 
     @Override
@@ -120,6 +140,7 @@ public class TaskDao extends Dao<Task> {
             task.setProgress(resultSet.getByte("progresso"));
             task.setConclusion(
                     resultSet.getObject("conclusao", LocalDate.class));
+            task.setExcluded(resultSet.getBoolean("excluido"));
         } catch (SQLException ex) {
             Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
         }
