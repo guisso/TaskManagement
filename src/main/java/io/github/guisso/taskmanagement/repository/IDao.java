@@ -64,7 +64,17 @@ public interface IDao<T> {
     public String getFindAllStatment();
 
     public List<T> findAll();
-    
+
+    // Trash
+    public String getMoveToTrashStatement();
+    public void moveToTrash(T e);
+
+    public String getRestoreFromTrashStatement();
+    public void restoreFromTrash(Long id); // OU T e
+
+    public String getFindAllOnTrashStatement();
+    public List<T> findAllOnTrash();
+
     // Assembly objects
     public T extractObject(ResultSet resultSet);
 
