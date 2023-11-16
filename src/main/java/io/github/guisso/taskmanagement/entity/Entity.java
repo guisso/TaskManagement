@@ -56,9 +56,8 @@ public abstract class Entity {
         return excluded;
     }
 
-    public void setExcluido(boolean excluded) {
+    public void setExcluded(boolean excluded) {
         this.excluded = excluded;
     }
-    
 
 }
