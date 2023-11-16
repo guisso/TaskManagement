@@ -33,6 +33,7 @@
  */
 package io.github.guisso.taskmanagement.repository;
 
+import io.github.guisso.taskmanagement.entity.Entity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
@@ -44,7 +45,7 @@ import java.util.List;
  * @version 0.1, 2022-10-24
  * @param <T> Data type
  */
-public interface IDao<T> {
+public interface IDao<T extends Entity> {
 
     // Save
     public String getSaveStatment();
