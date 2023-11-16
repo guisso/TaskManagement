@@ -147,6 +147,7 @@ public class SpecialTaskDao
             specialTask.setProgress(resultSet.getByte("progresso"));
             specialTask.setConclusion(
                     resultSet.getObject("conclusao", LocalDate.class));
+            specialTask.setSpecial(resultSet.getBoolean("especial"));
         } catch (SQLException ex) {
             Logger.getLogger(SpecialTaskDao.class.getName()).log(Level.SEVERE, null, ex);
         }
