@@ -53,7 +53,7 @@ import java.util.logging.Logger;
 public abstract class Dao<T extends Entity>
         implements IDao<T> {
 
-    public static final String DB = "sistema";
+    public static final String DB = "gestaotarefas";
 
     @Override
     public Long saveOrUpdate(T e) {
