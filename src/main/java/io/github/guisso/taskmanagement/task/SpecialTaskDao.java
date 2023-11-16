@@ -60,7 +60,7 @@ import java.util.logging.Logger;
 public class SpecialTaskDao
         extends Dao<SpecialTask> {
 
-    public static final String TABLE = "tarefa";
+    public static final String TABLE = "tarefaespecial";
 
     @Override
     public String getSaveStatment() {
@@ -99,7 +99,7 @@ public class SpecialTaskDao
 
     @Override
     public void composeSaveOrUpdateStatement(PreparedStatement pstmt, SpecialTask e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
     @Override
