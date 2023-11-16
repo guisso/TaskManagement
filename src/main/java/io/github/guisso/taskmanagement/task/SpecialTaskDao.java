@@ -36,7 +36,11 @@ package io.github.guisso.taskmanagement.task;
 import io.github.guisso.taskmanagement.repository.Dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Classe TaskDao
@@ -65,7 +69,7 @@ public class SpecialTaskDao extends Dao<SpecialTask> {
 
     @Override
     public String getUpdateStatment() {
-        return "update " + TABLE
+        return "update " + TABLE 
                 + " set especial = ?"
                 + " where id = ?";
     }
@@ -110,7 +114,21 @@ public class SpecialTaskDao extends Dao<SpecialTask> {
 
     @Override
     public SpecialTask extractObject(ResultSet resultSet) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        SpecialTask specialTask = null;
+
+        try {
+            specialTask = new SpecialTask();
+            specialTask.setId(resultSet.getLong("id"));
+            specialTask.setDescription(resultSet.getString("descricao"));
+            specialTask.setProgress(resultSet.getByte("progresso"));
+            specialTask.setConclusion(
+                    resultSet.getObject("conclusao", LocalDate.class));
+        } catch (SQLException ex) {
+            Logger.getLogger(SpecialTaskDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return specialTask;
     }
 
     public List<SpecialTask> findByProgressLessThan20() {
