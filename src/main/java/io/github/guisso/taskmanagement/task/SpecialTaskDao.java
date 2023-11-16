@@ -43,7 +43,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Classe TaskDao
+ * Classe SpecialTaskDao
  *
  * <code>
  * CREATE TABLE `tarefaespecial` (
@@ -57,7 +57,8 @@ import java.util.logging.Logger;
  * @author Luis Guisso &lt;luis dot guisso at ifnmg dot edu dot br&gt;
  * @version 0.1, 2022-10-24
  */
-public class SpecialTaskDao extends Dao<SpecialTask> {
+public class SpecialTaskDao
+        extends Dao<SpecialTask> {
 
     public static final String TABLE = "tarefa";
 
@@ -69,9 +70,31 @@ public class SpecialTaskDao extends Dao<SpecialTask> {
 
     @Override
     public String getUpdateStatment() {
-        return "update " + TABLE 
+        return "update " + TABLE
                 + " set especial = ?"
                 + " where id = ?";
+    }
+
+    @Override
+    public Long saveOrUpdate(SpecialTask e) {
+
+        // Save/update on Task table the task data
+        Long idTask = new TaskDao().saveOrUpdate(e);
+
+        if (e.getId() == null || e.getId() == 0) {
+            // Negative ID act as flag to a new insertion
+            // ATENTION to composeSaveOrUpdateStatement()
+            e.setId(-idTask);
+
+        } else {
+            // Positive ID act as flag to update a record
+            e.setId(idTask);
+        }
+
+        // Invoke the original method, otherwise an infity recursion will be started
+        super.saveOrUpdate(e);
+
+        return idTask;
     }
 
     @Override
