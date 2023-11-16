@@ -126,7 +126,7 @@ public class SpecialTaskDao
 
     @Override
     public String getFindAllStatment() {
-        return "select id, descricao, progresso, conclusao, especial"
+        return "select t.id, descricao, progresso, conclusao, especial"
                 + " from " + TABLE + " t"
                 + " inner join " + TaskDao.TABLE + " te"
                 + " on t.id = te.id"
