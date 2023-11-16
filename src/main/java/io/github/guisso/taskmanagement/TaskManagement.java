@@ -33,9 +33,10 @@
  */
 package io.github.guisso.taskmanagement;
 
+import io.github.guisso.taskmanagement.task.SpecialTask;
+import io.github.guisso.taskmanagement.task.SpecialTaskDao;
 import io.github.guisso.taskmanagement.task.Task;
 import io.github.guisso.taskmanagement.task.TaskDao;
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -43,48 +44,61 @@ import java.util.List;
  * @author Luis Guisso &lt;luis dot guisso at ifnmg dot edu dot br&gt;
  */
 public class TaskManagement {
-
+    
     public static void main(String[] args) {
-        // Criar um objeto
-        Task limparCasa = new Task(null, "Limpar a casa", (byte) 20, null);
-        System.out.println("> " + limparCasa);
 
-        Task regarPlantas = new Task(null, "Regar plantas", (byte) 15, null);
-        System.out.println("> " + regarPlantas);
-
-        Task revisarConteudo = new Task(null, "Revisar conteudo", (byte) 100, LocalDate.of(2022, 10, 15));
-        System.out.println("> " + revisarConteudo);
-
-        // Salvar no banco de dados
-        Long limparCasaId = new TaskDao().saveOrUpdate(limparCasa);
-        limparCasa.setId(limparCasaId);
-
-        Long regarPlantasId = new TaskDao().saveOrUpdate(regarPlantas);
-        regarPlantas.setId(regarPlantasId);
-
-        Long revisarConteudoId = new TaskDao().saveOrUpdate(revisarConteudo);
-        revisarConteudo.setId(revisarConteudoId);
-
-        // Recuperar objeto recém-salvo
-        Task limparCasaAux = new TaskDao().findById(limparCasaId);
-        System.out.println("> " + limparCasaAux);
+        // Special task
+        SpecialTask task = new SpecialTask();
+        task.setDescription("Organizar atividades da semana");
+        task.setProgress((byte) 25);
+        task.setSpecial(true);
         
-        // Atualizar registro já salvo
-        limparCasaAux.setDescription(limparCasaAux.getDescription() + "!!!");
-        new TaskDao().saveOrUpdate(limparCasaAux);
+        Long id = new SpecialTaskDao().saveOrUpdate(task);
+        
+        task.setId(id);
+        task.setProgress((byte) 40);
+        task.setSpecial(false);
+        
+        new SpecialTaskDao().saveOrUpdate(task);
+        
+        SpecialTask taskAux = new SpecialTaskDao().findById(id);
+        
+        System.out.println(">> " + taskAux);
 
-        // Recuperar todos os objetos
-        List<Task> tasks = new TaskDao().findAll();
-        System.out.println(">> " + tasks);
-        
-        // Recuperar todos os objetos com progresso menor do que 20
-        List<Task> tasksProgressLessThan20 
-                = new TaskDao().findByProgressLessThan20();
-        System.out.println(">> " + tasksProgressLessThan20);
-        
-        // Recuperar todos os objetos com descrição parecida com "sa"
-        List<Task> tasksWithSaDescription
-                = new TaskDao().findByDescription("sa");
-        System.out.println(">> " + tasksWithSaDescription);
+        // Basic objects
+//        Task limparCasa = new Task(null, "Limpar a casa", (byte) 20, null);
+//        System.out.println("> " + limparCasa);
+//
+//        Task regarPlantas = new Task(null, "Regar plantas", (byte) 15, null);
+//        System.out.println("> " + regarPlantas);
+//
+//        Task revisarConteudo = new Task(null, "Revisar conteudo", (byte) 100, LocalDate.of(2022, 10, 15));
+//        System.out.println("> " + revisarConteudo);
+        // Save on DB
+//        Long limparCasaId = new TaskDao().saveOrUpdate(limparCasa);
+//        limparCasa.setId(limparCasaId);
+//
+//        Long regarPlantasId = new TaskDao().saveOrUpdate(regarPlantas);
+//        regarPlantas.setId(regarPlantasId);
+//
+//        Long revisarConteudoId = new TaskDao().saveOrUpdate(revisarConteudo);
+//        revisarConteudo.setId(revisarConteudoId);
+        // Retrieve saved object
+//        Task limparCasaAux = new TaskDao().findById(limparCasaId);
+//        System.out.println("> " + limparCasaAux);
+        // Update saved object
+//        limparCasaAux.setDescription(limparCasaAux.getDescription() + "!!!");
+//        new TaskDao().saveOrUpdate(limparCasaAux);
+        // Retrieve all saved objects
+//        List<Task> tasks = new TaskDao().findAll();
+//        System.out.println(">> " + tasks);
+        // Retrive task with less than 20 percent progress
+//        List<Task> tasksProgressLessThan20 
+//                = new TaskDao().findByProgressLessThan20();
+//        System.out.println(">> " + tasksProgressLessThan20);
+        // Retrieve all tasks with partial description
+//        List<Task> tasksWithSaDescription
+//                = new TaskDao().findByDescription("sa");
+//        System.out.println(">> " + tasksWithSaDescription);
     }
 }
