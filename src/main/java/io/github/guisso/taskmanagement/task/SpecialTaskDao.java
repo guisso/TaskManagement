@@ -99,7 +99,20 @@ public class SpecialTaskDao
 
     @Override
     public void composeSaveOrUpdateStatement(PreparedStatement pstmt, SpecialTask e) {
-        
+        try {
+            if (e.getId() != null && e.getId() < 0) {
+                // INSERT
+                pstmt.setLong(1, -e.getId()); // <<<<<< flag to force insertion
+                pstmt.setBoolean(2, e.isSpecial());
+            } else {
+                // UPDATE
+                pstmt.setBoolean(1, e.isSpecial());
+                pstmt.setLong(2, e.getId());
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SpecialTaskDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
