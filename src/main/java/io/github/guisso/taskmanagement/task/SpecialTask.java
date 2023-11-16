@@ -36,11 +36,6 @@ package io.github.guisso.taskmanagement.task;
 /**
  * Special task
  * 
- * CREATE TABLE `tarefaespecial` ( `id` bigint(20) unsigned NOT NULL, `especial`
- * tinyint(1) DEFAULT 0, PRIMARY KEY (`id`), CONSTRAINT `tarefaespecial_ibfk_1`
- * FOREIGN KEY (`id`) REFERENCES `tarefa` (`id`) ) ENGINE=InnoDB DEFAULT
- * CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
- *
  * @author Luis Guisso &lt;luis.guisso at ifnmg.edu.br&gt;
  */
 public class SpecialTask
