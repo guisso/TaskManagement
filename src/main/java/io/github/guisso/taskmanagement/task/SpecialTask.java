@@ -60,7 +60,7 @@ public class SpecialTask
                 + ", progress=" + getProgress()
                 + ", conclusion=" + getConclusion()
                 + ", concluded=" + getConcluded()
-                + "special=" + special
+                + ", special=" + special
                 + '}';
     }
 
