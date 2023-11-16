@@ -35,10 +35,32 @@ package io.github.guisso.taskmanagement.task;
 
 /**
  * Special task
- * 
+ *
  * @author Luis Guisso &lt;luis.guisso at ifnmg.edu.br&gt;
  */
 public class SpecialTask
         extends Task {
+
+    private boolean special;
+
+    public boolean isSpecial() {
+        return special;
+    }
+
+    public void setSpecial(boolean special) {
+        this.special = special;
+    }
+
+    @Override
+    public String toString() {
+        return "SpecialTask{"
+                + "id=" + getId()
+                + ", description=" + getDescription()
+                + ", progress=" + getProgress()
+                + ", conclusion=" + getConclusion()
+                + ", concluded=" + getConcluded()
+                + "special=" + special
+                + '}';
+    }
 
 }
