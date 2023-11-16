@@ -50,7 +50,7 @@ import java.util.logging.Logger;
  * @version 0.1, 2022-10-24
  * @param <T> Entity data type
  */
-public abstract class Dao<T>
+public abstract class Dao<T extends Entity>
         implements IDao<T> {
 
     public static final String DB = "sistema";
@@ -60,9 +60,11 @@ public abstract class Dao<T>
 
         // Primary key
         Long id = 0L;
-
-        if (((Entity) e).getId() == null
-                || ((Entity) e).getId() == 0) {
+        
+        if (e.getId() == null
+                // Negative IDs acts as flags to insert new registers
+                // on one-to-one relationships with same PKs
+                || e.getId() <= 0) {
 
             // Insert a new register
             // try-with-resources
