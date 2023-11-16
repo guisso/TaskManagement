@@ -37,7 +37,7 @@ import io.github.guisso.taskmanagement.entity.Entity;
 import java.time.LocalDate;
 
 /**
- * Classe Task
+ * Task class
  *
  * @author Luis Guisso &lt;luis dot guisso at ifnmg dot edu dot br&gt;
  * @version 0.1, 2022-10-24
