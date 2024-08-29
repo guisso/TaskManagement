@@ -40,7 +40,7 @@ import java.time.LocalDate;
  * Task class
  *
  * @author Luis Guisso &lt;luis dot guisso at ifnmg dot edu dot br&gt;
- * @version 0.1, 2022-10-24
+ * @version 0.2, 2024-08-29
  */
 public class Task
         extends Entity {
