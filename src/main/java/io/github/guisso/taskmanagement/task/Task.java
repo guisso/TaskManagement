@@ -103,14 +103,21 @@ public class Task
     }
 
     public final void setConclusion(LocalDate conclusion) {
-        this.conclusion = conclusion;
 
-        if (conclusion != null) {
-            concluded = true;
-            progress = (byte) 100;
-        } else {
-            concluded = false;
+        if (conclusion == null) {
+            this.conclusion = null;
+            this.concluded = false;
+            return;
         }
+
+        if (conclusion.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Conclusion must be before now");
+        }
+
+        concluded = true;
+        progress = (byte) 100;
+
+        this.conclusion = conclusion;
     }
 
     public Boolean getConcluded() {
