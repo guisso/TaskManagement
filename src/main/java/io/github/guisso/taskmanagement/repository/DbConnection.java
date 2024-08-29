@@ -43,7 +43,7 @@ import java.util.logging.Logger;
  * Class DbConnection
  *
  * @author Luis Guisso &lt;luis dot guisso at ifnmg dot edu dot br&gt;
- * @version 0.1, 2022-10-24
+ * @version 0.2, 2024-08-29
  */
 public class DbConnection {
 
@@ -51,8 +51,7 @@ public class DbConnection {
     private static Connection connection;
 
     /**
-     * URL database connection
-     * (protocol/sgbd/ip/port/database/parameters)
+     * URL database connection (protocol/sgbd/ip/port/database/parameters)
      */
     public static final String URL;
 
@@ -74,16 +73,6 @@ public class DbConnection {
         PASSWORD = "";
     }
 
-    //<editor-fold defaultstate="collapsed" desc="Construtor privado">
-    /*
-     * Private constructor to force access to the connection by the 
-     * static member getConnection() without requiring the generation of 
-     * new objects ConexaoBd ConexaoBd
-     */
-    private DbConnection() {
-    }
-    //</editor-fold>
-
     /**
      * Establishes and generates database connection retention
      *
@@ -100,14 +89,23 @@ public class DbConnection {
                 //     from the provided URL, username and password
                 connection = DriverManager.getConnection(URL, USER, PASSWORD);
             } catch (SQLException ex) {
-                // TODO Rever procedimento e encerrar o programa em caso de falha
                 // Log failure
-                Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
-                // System.exit(-1);
+                Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, "System stopped because there is no RDBMS connection", ex);
+                System.exit(-1);
             }
         }
 
         // Returns the established connection
         return connection;
     }
+
+    //<editor-fold defaultstate="collapsed" desc="Private constructor">
+    /*
+    * Private constructor to force access to the connection by the
+    * static member getConnection() without requiring the generation of
+    * new objects ConexaoBd ConexaoBd
+     */
+    private DbConnection() {
+    }
+    //</editor-fold>
 }
