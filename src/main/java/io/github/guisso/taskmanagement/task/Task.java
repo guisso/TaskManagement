@@ -88,14 +88,14 @@ public class Task
     }
 
     public final void setProgress(Byte progress) {
-        this.progress = progress;
-
         if (progress != null
                 && (progress < 0 || progress > 100)) {
             throw new IllegalArgumentException("Progress must be between 0 and 100");
         } else {
             concluded = progress != null && progress == 100;
         }
+
+        this.progress = progress;
     }
 
     public LocalDate getConclusion() {
