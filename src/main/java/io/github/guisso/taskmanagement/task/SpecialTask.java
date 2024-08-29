@@ -37,7 +37,7 @@ package io.github.guisso.taskmanagement.task;
  * Special task
  *
  * @author Luis Guisso &lt;luis.guisso at ifnmg.edu.br&gt;
- * @version 0.1, 2023-11-16
+ * @version 0.2, 2024-08-29
  */
 public class SpecialTask
         extends Task {
