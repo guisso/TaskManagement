@@ -42,7 +42,7 @@ import java.util.List;
  * Interface IDao
  *
  * @author Luis Guisso &lt;luis dot guisso at ifnmg dot edu dot br&gt;
- * @version 0.1, 2022-10-24
+ * @version 0.2, 2024-08-29
  * @param <T> Data type
  */
 public interface IDao<T extends Entity> {
@@ -71,7 +71,7 @@ public interface IDao<T extends Entity> {
     public void moveToTrash(T e);
 
     public String getRestoreFromTrashStatement();
-    public void restoreFromTrash(Long id); // OU T e
+    public void restoreFromTrash(Long id);
 
     public String getFindAllOnTrashStatement();
     public List<T> findAllOnTrash();
