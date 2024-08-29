@@ -44,6 +44,7 @@ public class SpecialTask
 
     private boolean special;
 
+    //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
     public boolean isSpecial() {
         return special;
     }
@@ -51,6 +52,7 @@ public class SpecialTask
     public void setSpecial(boolean special) {
         this.special = special;
     }
+    //</editor-fold>
 
     @Override
     public String toString() {
