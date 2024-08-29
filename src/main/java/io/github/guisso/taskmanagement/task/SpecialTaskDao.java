@@ -44,18 +44,22 @@ import java.util.logging.Logger;
 
 /**
  * Classe SpecialTaskDao
+ * 
+ * A special task creates a one-to-one relationship with Task table
+ * reusing your existing structure
  *
  * <code>
  * CREATE TABLE `tarefaespecial` (
  *  `id` bigint(20) unsigned NOT NULL,
  *  `especial` tinyint(1) DEFAULT 0,
  *  PRIMARY KEY (`id`),
- *  CONSTRAINT `tarefaespecial_ibfk_1` FOREIGN KEY (`id`) REFERENCES `tarefa` (`id`)
+ *  CONSTRAINT `tarefaespecial_ibfk_1` 
+ *      FOREIGN KEY (`id`) REFERENCES `tarefa` (`id`)
  * ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=latin1;
  * </code>
  *
  * @author Luis Guisso &lt;luis dot guisso at ifnmg dot edu dot br&gt;
- * @version 0.1, 2022-10-24
+ * @version 0.2, 2024-08-29
  */
 public class SpecialTaskDao
         extends Dao<SpecialTask> {
@@ -64,7 +68,9 @@ public class SpecialTaskDao
 
     @Override
     public String getSaveStatment() {
-        return "insert into " + TABLE + "(id, especial)"
+        // Note that the ID has a value that is not the "default"
+        return "insert into " + TABLE 
+                + "(id, especial)"
                 + " values (?, ?)";
     }
 
@@ -78,7 +84,8 @@ public class SpecialTaskDao
     @Override
     public Long saveOrUpdate(SpecialTask e) {
 
-        // Save/update on Task table the task data
+        // Save/update on **Task table** the task data
+        // A negative ID inserts a **NEW** record into the DB
         Long idTask = new TaskDao().saveOrUpdate(e);
 
         if (e.getId() == null || e.getId() == 0) {
@@ -91,7 +98,8 @@ public class SpecialTaskDao
             e.setId(idTask);
         }
 
-        // Invoke the original method, otherwise an infity recursion will be started
+        // Invoke the original method, otherwise an 
+        // infity recursion will be started
         super.saveOrUpdate(e);
 
         return idTask;
@@ -100,12 +108,14 @@ public class SpecialTaskDao
     @Override
     public void composeSaveOrUpdateStatement(PreparedStatement pstmt, SpecialTask e) {
         try {
+            // Negative ID act as flag to a new insertion ...
             if (e.getId() != null && e.getId() < 0) {
-                // INSERT
-                pstmt.setLong(1, -e.getId()); // <<<<<< flag to force insertion
+                // INSERT statement
+                // ... but the real ID must be positive
+                pstmt.setLong(1, -e.getId());
                 pstmt.setBoolean(2, e.isSpecial());
             } else {
-                // UPDATE
+                // UPDATE statement
                 pstmt.setBoolean(1, e.isSpecial());
                 pstmt.setLong(2, e.getId());
             }
