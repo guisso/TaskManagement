@@ -37,13 +37,14 @@ package io.github.guisso.taskmanagement.entity;
  * Class Entity
  *
  * @author Luis Guisso &lt;luis dot guisso at ifnmg dot edu dot br&gt;
- * @version 0.1, 2022-10-24
+ * @version 0.2, 2024-08-29
  */
 public abstract class Entity {
 
     private Long id;
     private boolean excluded;
 
+    //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
     public Long getId() {
         return id;
     }
@@ -59,5 +60,6 @@ public abstract class Entity {
     public void setExcluded(boolean excluded) {
         this.excluded = excluded;
     }
+    //</editor-fold>
 
 }
