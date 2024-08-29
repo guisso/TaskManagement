@@ -50,6 +50,9 @@ import java.util.logging.Logger;
  * @version 0.1, 2022-10-24
  * @param <T> Entity data type
  */
+
+// TODO Turn it into a Singleton
+
 public abstract class Dao<T extends Entity>
         implements IDao<T> {
 
