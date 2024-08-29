@@ -50,15 +50,16 @@ import java.util.logging.Logger;
  * CREATE TABLE `tarefa` (
  * `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
  * `descricao` varchar(100) NOT NULL,
- * `progresso` tinyint(4) DEFAULT '0',
+ * `progresso` tinyint(1) DEFAULT '0',
  * `conclusao` date DEFAULT NULL,
+ * `excluido` tinyint(1) DEFAULT '0',
  * PRIMARY KEY (`id`),
  * UNIQUE KEY `id` (`id`)
  * ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
  * </code>
  *
  * @author Luis Guisso &lt;luis dot guisso at ifnmg dot edu dot br&gt;
- * @version 0.1, 2022-10-24
+ * @version 0.2, 2024-08-29
  */
 public class TaskDao extends Dao<Task> {
 
@@ -66,12 +67,16 @@ public class TaskDao extends Dao<Task> {
 
     @Override
     public String getSaveStatment() {
-        return "insert into " + TABLE + "(descricao, progresso, conclusao)  values (?, ?, ?)";
+        return "insert into " + TABLE 
+                + "(descricao, progresso, conclusao)"
+                + " values (?, ?, ?)";
     }
 
     @Override
     public String getUpdateStatment() {
-        return "update " + TABLE + " set descricao = ?, progresso = ?, conclusao = ? where id = ?";
+        return "update " + TABLE 
+                + " set descricao = ?, progresso = ?,"
+                + " conclusao = ? where id = ?";
     }
 
     @Override
@@ -101,31 +106,36 @@ public class TaskDao extends Dao<Task> {
     @Override
     public String getFindByIdStatment() {
         return "select id, descricao, progresso, conclusao, excluido"
-                + " from tarefa where id = ?";
+                + " from " + TABLE
+                + " where id = ?";
     }
 
     @Override
     public String getFindAllStatment() {
         return "select id, descricao, progresso, conclusao, excluido"
-                + " from tarefa"
-                + " where exlcuido = false";
+                + " from " + TABLE 
+                + " where excluido = false";
     }
 
     @Override
     public String getMoveToTrashStatement() {
-        return "update " + TABLE + " set excluido = true"
+        return "update " + TABLE 
+                + " set excluido = true"
                 + " where id = ?";
     }
 
     @Override
     public String getRestoreFromTrashStatement() {
-        return "update " + TABLE + " set excluido = false"
+        return "update " + TABLE 
+                + " set excluido = false"
                 + " where id = ?";
     }
 
     @Override
     public String getFindAllOnTrashStatement() {
-        return "select * from " + TABLE + " where excluido = true";
+        return "select id, descricao, progresso, conclusao, excluido"
+                + " from" + TABLE 
+                + " where excluido = true";
     }
 
     @Override
@@ -150,7 +160,7 @@ public class TaskDao extends Dao<Task> {
 
     public List<Task> findByProgressLessThan20() {
         
-        final String SQL = "select *"
+        final String SQL = "select id, descricao, progresso, conclusao, excluido"
                 + " from " + TABLE 
                 + " where progresso < 20";
         
@@ -175,7 +185,7 @@ public class TaskDao extends Dao<Task> {
 
     public List<Task> findByDescription(String description) {
         
-        final String SQL = "select *"
+        final String SQL = "select id, descricao, progresso, conclusao, excluido"
                 + " from " + TABLE 
                 + " where descricao"
                 + " like ?";
