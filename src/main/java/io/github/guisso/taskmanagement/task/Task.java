@@ -50,27 +50,30 @@ public class Task
     private LocalDate conclusion;
     private Boolean concluded;
 
+    //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Task() {
     }
 
     public Task(Long id, String description, Byte progress, LocalDate conclusion) {
         setId(id);
-        
+
 //        this.description = description;
         setDescription(description);  // Security problem!
-        
+
 //        this.progress = progress;
         setProgress(progress);  // Security problem!
-        
+
 //        this.conclusion = conclusion;
         setConclusion(conclusion);  // Security problem!
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public final void setDescription(String description) {
         if (description == null) {
             throw new IllegalArgumentException("Null description");
         } else if (description.length() > 100) {
@@ -84,7 +87,7 @@ public class Task
         return progress;
     }
 
-    public void setProgress(Byte progress) {
+    public final void setProgress(Byte progress) {
         this.progress = progress;
 
         if (progress != null
@@ -99,7 +102,7 @@ public class Task
         return conclusion;
     }
 
-    public void setConclusion(LocalDate conclusion) {
+    public final void setConclusion(LocalDate conclusion) {
         this.conclusion = conclusion;
 
         if (conclusion != null) {
@@ -113,6 +116,7 @@ public class Task
     public Boolean getConcluded() {
         return concluded;
     }
+    //</editor-fold>
 
     @Override
     public String toString() {
